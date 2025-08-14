@@ -1,0 +1,131 @@
+---
+title: "loops_and_functions"
+format: html
+editor: visual
+---
+
+#### Task 1 ####
+Creating two vectors
+```{r}
+weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+transects <- c("Transect A", "Transect B", "Transect C")
+
+```
+
+Ok now the for loop 
+
+we need empty matrix 
+```{r}
+week_matrix <- matrix(ncol = length(transects), nrow = length(weekdays))
+```
+
+
+```{r}
+for (i in seq_along(weekdays)) {
+  for (j in seq_along(transects)) {
+    week_matrix[i,j] <- paste0(weekdays[i], "-", transects[j])
+  }
+  
+}
+
+```
+
+#### Task 2 ####
+
+#Writing a function force
+
+```{r}
+force <- function(mass, accel){
+  print(paste0("The force is ", mass*accel , " Newtons"))
+}
+
+#Lets test 
+
+force(50,10)
+```
+
+#### Task 3 ####
+
+```{r}
+fish_weight <- function(fish_name, tot_length){
+  if (fish_name == "Milkfish"){
+    val_weight <- .0905*(tot_length)^2.52
+  } else if (fish_name == "Giant barracuda"){
+    val_weight <- .0181*(tot_length)^3.27
+  }else if (fish_name == "Giant trevally") { 
+    val_weight <- .0353*(tot_length)^3.05
+    
+  }
+  print(val_weight)
+}
+```
+
+now lets test it 
+
+```{r}
+fish_weight("Milkfish", 20)
+
+fish_weight("Giant barracuda", 10)
+
+fish_weight("Giant trevally", 50)
+
+```
+
+ok now we need to calculate it over a vector of lengths 
+
+```{r}
+lenth_vec <- seq(from = 0,
+                 to = 100, 
+                 by = 1)
+
+#Now an empty vector for the output
+milkfish_weights <- vector(mode = "numeric", length = length(lenth_vec))
+
+```
+now we populate with a for loop
+
+```{r}
+for (i in seq_along(lenth_vec)){
+  milkfish_weights[i]<- fish_weight("Milkfish", lenth_vec[i])
+}
+```
+#### Task 4 ####
+Wave power bs 
+```{r}
+wave_power <- function(period, height){
+  print(.5*((height)^2)*period)
+}
+```
+now some vectors
+```{r}
+wave_heights <- seq(from = 0,
+                    to = 3,
+                    by = .2)
+```
+
+now we calculate at period of 8sec
+```{r}
+wave_power(8,wave_heights)
+```
+
+#### Task 5
+```{r}
+#5 is easy
+real_wave_power <- function(depth, height, period){
+  if(depth> 12){
+    print(paste0((.5*((height)^2)*period), " Using Deep Equation"))
+  }else if (depth <= 12){
+    print(paste0((.81*((height)^2)*period)," using shallow equation"))
+  }
+}
+```
+
+lets test it at 3 depths
+
+```{r}
+real_wave_power(14, 14,14)
+
+real_wave_power(11,11,11)
+```
+
